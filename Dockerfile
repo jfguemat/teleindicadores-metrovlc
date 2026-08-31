@@ -17,7 +17,11 @@ RUN install2.r --error \
     purrr \
     DT
 
-COPY teleinc_metroVLC.R /srv/shiny-server/
+# Esborrem els fitxers de mostra de Shiny Server
+RUN rm -rf /srv/shiny-server/*
+
+# Copiem la teua app com a aplicació principal
+COPY app.R /srv/shiny-server/
 
 EXPOSE 3838
 
