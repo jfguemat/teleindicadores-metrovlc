@@ -51,7 +51,13 @@ fetch_teleindicador_oficial <- function(id_estacion) {
       ) %>%
       req_timeout(5) %>%
       req_perform()
-    
+    # --- AQUÍ el diagnóstico ---
+message("STATUS TELEINDICADOR: ", resp_status(resp))
+message("HEADERS: ", paste(names(resp_headers(resp)), resp_headers(resp), sep="=", collapse=" | "))
+
+raw_text <- resp_body_string(resp)
+message("RAW (primeros 200 chars): ", substr(raw_text, 1, 200))
+    #-----------------------------
     raw_text <- resp_body_string(resp)
     json_data <- jsonlite::fromJSON(raw_text)
     
