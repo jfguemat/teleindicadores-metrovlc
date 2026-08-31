@@ -21,7 +21,7 @@ RUN install2.r --error \
 RUN rm -rf /srv/shiny-server/*
 
 # Copiem la teua app com a aplicació principal
-COPY teleinc_metroVLC.R /srv/shiny-server/
+COPY app.R /srv/shiny-server/
 
 EXPOSE 3838
 
