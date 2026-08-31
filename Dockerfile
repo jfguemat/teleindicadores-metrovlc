@@ -22,9 +22,10 @@ RUN install2.r --error \
 
 RUN rm -rf /srv/shiny-server/*
 COPY app.R /srv/shiny-server/
-COPY shiny-server.conf /etc/shiny-server/shiny-server.conf
-
 RUN chown -R shiny:shiny /srv/shiny-server
 
 EXPOSE 3838
-CMD ["/usr/bin/shiny-server"]
+
+# Lanza la app directamente con R, sin shiny-server,
+# para que message()/print() salgan por stdout y Render los capture
+CMD ["R", "-e", "shiny::runApp('/srv/shiny-server', host='0.0.0.0', port=3838)"]
