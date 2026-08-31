@@ -17,7 +17,7 @@ RUN install2.r --error \
     purrr \
     DT
 
-COPY app.R /srv/shiny-server/
+COPY teleinc_metroVLC.R /srv/shiny-server/
 
 EXPOSE 3838
 
