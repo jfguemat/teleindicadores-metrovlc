@@ -1,10 +1,13 @@
 FROM rocker/shiny:latest
 
-# 1. Dependències del sistema per als paquets de R
+# 1. Dependències del sistema necessàries per a fs, sass, bslib i httr2
 RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libcurl4-openssl-dev \
     libssl-dev \
+    libuv1-dev \
+    libpng-dev \
+    zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # 2. Instal·lació de llibreries de R
@@ -19,16 +22,12 @@ RUN install2.r --error \
     purrr \
     DT
 
-# 3. Neteja de carpetes i còpia de l'aplicació
+# 3. Neteja de la carpeta per defecte i còpia de la teua app
 RUN rm -rf /srv/shiny-server/*
 COPY app.R /srv/shiny-server/
 
-# 4. Ajust de permisos per a l'usuari shiny
+# 4. Permisos per a l'usuari shiny
 RUN chown -R shiny:shiny /srv/shiny-server
-
-# 5. Activar logs detallats a la consola (Render)
-ENV SHINY_LOG_STDERR=1
-ENV SHINY_GA_ID=""
 
 EXPOSE 3838
 
